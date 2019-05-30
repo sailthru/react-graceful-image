@@ -47,11 +47,15 @@ class GracefulImage extends Component {
         this.props.style && this.props.style.height
           ? this.props.style.height
           : this.props.height ? this.props.height : "150";
-      placeholder =
+      if (this.props.placeholderImage !== null) {
+        placeholder = placeholderImage;
+      } else {
+        placeholder =
         "data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'{{w}}' height%3D'{{h}}' viewBox%3D'0 0 {{w}} {{h}}'%2F%3E";
-      placeholder = placeholder
-        .replace(/{{w}}/g, width)
-        .replace(/{{h}}/g, height);
+        placeholder = placeholder
+          .replace(/{{w}}/g, width)
+          .replace(/{{h}}/g, height);
+      }
     }
 
     // store a reference to the throttled function
@@ -187,9 +191,25 @@ class GracefulImage extends Component {
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
       return null;
+    if (!this.state.loaded && placeholderImage) {
+      return (
+        <img
+          src={placeholderImage}
+          className={this.props.className}
+          width={this.props.width}
+          height={this.props.height}
+          style={{
+            ...style,
+            ...this.props.style
+          }}
+          alt={this.props.alt}
+          ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
+        />
+      );
+    }
 
     const src = this.state.loaded ? this.props.src : this.state.placeholder;
-    const style = this.state.loaded
+    const style = this.state.loaded && !this.props.placeholderImage
       ? {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
@@ -222,6 +242,8 @@ GracefulImage.defaultProps = {
   height: null,
   alt: "Broken image placeholder",
   style: {},
+  placeholderImage: null,
+  fallbackImage: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -240,6 +262,8 @@ GracefulImage.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   alt: PropTypes.string,
   style: PropTypes.object,
+  placeholderImage: PropTypes.string,
+  fallbackImage: PropTypes.string,
   placeholderColor: PropTypes.string,
   retry: PropTypes.shape({
     count: PropTypes.number,
