@@ -215,7 +215,7 @@ class GracefulImage extends Component {
             alt={this.props.alt}
             ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
           />
-          <p style="font-size:14px;color: #c1c7c9;" >Email inbox temporarily unavailable</p>
+          <p style={{ fontSize:'14px', color:'#c1c7c9' }} >Email inbox temporarily unavailable</p>
         </div>
         );
     }
