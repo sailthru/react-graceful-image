@@ -193,7 +193,7 @@ class GracefulImage extends Component {
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
       return null;
-    if (!this.state.loaded && placeholderImage) {
+    if (!this.state.loaded && this.state.placeholderImage) {
       return (
         <img
           src={placeholderImage}
