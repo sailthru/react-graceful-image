@@ -201,9 +201,15 @@ class GracefulImage extends Component {
           animationTimingFunction: "ease-in",
           transform: 'translateY(50%)',
         };
+      const wrapperStyle = {
+        width: this.props.width,
+        height: this.props.height,
+        backgroundColor:'#f2f3f4',
+        textAlign:'center'
+      };
       
       return (
-        <div style={{ width:`${this.props.width}`, height:`${this.props.height}`, backgroundColor:'#f2f3f4', textAlign:'center' }}>
+        <div style={{ ...wrapperStyle }}>
           <img
             src={this.state.fallbackImage}
             className={this.props.className}
