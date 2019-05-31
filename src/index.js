@@ -198,11 +198,12 @@ class GracefulImage extends Component {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
           animationIterationCount: 1,
-          animationTimingFunction: "ease-in"
+          animationTimingFunction: "ease-in",
+          transform: 'translateY(50%)',
         };
       
       return (
-        <div style={{ width:this.props.width, height:this.props.height, backgroundColor:'#c1c7c9', flex:'inline' }}>
+        <div style={{ width:`${this.props.width}`, height:`${this.props.height}`, backgroundColor:'#f2f3f4', textAlign:'center' }}>
           <img
             src={this.state.fallbackImage}
             className={this.props.className}
@@ -215,7 +216,7 @@ class GracefulImage extends Component {
             alt={this.props.alt}
             ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
           />
-          <p style={{ fontSize:'14px', color:'#c1c7c9' }} >{this.props.fallbackMessage}</p>
+          <div style={{ fontSize:'14px', color:'#c1c7c9', paddingTop:'40px' }} >{this.props.fallbackMessage}</div>
         </div>
         );
     }
