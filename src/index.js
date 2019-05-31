@@ -179,6 +179,8 @@ class GracefulImage extends Component {
             };
           });
         }, this.state.retryDelay * 1000);
+      } else {
+        this.setState({placeholderImage: this.props.fallbackImage });
       }
     });
   }
