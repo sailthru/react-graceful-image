@@ -180,23 +180,30 @@ class GracefulImage extends Component {
           });
         }, this.state.retryDelay * 1000);
       } else {
-        this.setState({placeholderImage: this.props.fallbackImage });
+        this.setState({ fallbackImage: this.props.fallbackImage });
       }
     });
   }
 
   /*
     - If image hasn't yet loaded AND user didn't want a placeholder OR SVG not supported then don't render anything
-    - Else if image has loaded then render the image
-    - Else render the placeholder
+    - Else if image has not loaded and fallback image is given, then render the fallback image
+    - Else render the default placeholder until image is loaded.
   */
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
       return null;
-    if (!this.state.loaded && this.state.placeholderImage) {
+    else if (!this.state.loaded && this.state.fallbackImage) {
+      const style = {
+          animationName: "gracefulimage",
+          animationDuration: "0.3s",
+          animationIterationCount: 1,
+          animationTimingFunction: "ease-in"
+        };
+      
       return (
         <img
-          src={placeholderImage}
+          src={this.state.fallbackImage}
           className={this.props.className}
           width={this.props.width}
           height={this.props.height}
