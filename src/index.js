@@ -202,19 +202,22 @@ class GracefulImage extends Component {
         };
       
       return (
-        <img
-          src={this.state.fallbackImage}
-          className={this.props.className}
-          width={this.props.width}
-          height={this.props.height}
-          style={{
-            ...style,
-            ...this.props.style
-          }}
-          alt={this.props.alt}
-          ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
-        />
-      );
+        <div>
+          <img
+            src={this.state.fallbackImage}
+            className={this.props.className}
+            width={this.props.width}
+            height={this.props.height}
+            style={{
+              ...style,
+              ...this.props.style
+            }}
+            alt={this.props.alt}
+            ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
+          />
+          <p style="font-size:14px;color: #c1c7c9;" >Email inbox temporarily unavailable</p>
+        </div>
+        );
     }
 
     const src = this.state.loaded ? this.props.src : this.state.placeholder;
