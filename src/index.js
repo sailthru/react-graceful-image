@@ -284,7 +284,10 @@ GracefulImage.propTypes = {
   style: PropTypes.object,
   placeholderImage: PropTypes.string,
   fallbackImage: PropTypes.string,
-  fallbackMessage: PropTypes.element,
+  fallbackMessage: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   placeholderColor: PropTypes.string,
   retry: PropTypes.shape({
     count: PropTypes.number,
