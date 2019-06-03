@@ -264,7 +264,6 @@ GracefulImage.defaultProps = {
   placeholderImage: null,
   fallbackImage: null,
   fallbackMessage: null,
-  fallbackMsg: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
