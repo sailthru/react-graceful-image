@@ -199,7 +199,7 @@ class GracefulImage extends Component {
           animationDuration: "0.3s",
           animationIterationCount: 1,
           animationTimingFunction: "ease-in",
-          transform: 'translateY(50%)',
+          transform: 'translateY(75%)',
         };
       const wrapperStyle = {
         width: this.props.width,
