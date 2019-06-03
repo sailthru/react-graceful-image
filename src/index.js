@@ -207,7 +207,7 @@ class GracefulImage extends Component {
         backgroundColor:'#f2f3f4',
         textAlign:'center'
       };
-      
+
       return (
         <div style={{ ...wrapperStyle }}>
           <img
@@ -222,7 +222,7 @@ class GracefulImage extends Component {
             alt={this.props.alt}
             ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
           />
-          <div style={{ fontSize:'14px', color:'#c1c7c9', paddingTop:'40px' }} >{this.props.fallbackMessage}</div>
+          {this.props.fallbackMessage}
         </div>
         );
     }
@@ -264,6 +264,7 @@ GracefulImage.defaultProps = {
   placeholderImage: null,
   fallbackImage: null,
   fallbackMessage: null,
+  fallbackMsg: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -284,7 +285,7 @@ GracefulImage.propTypes = {
   style: PropTypes.object,
   placeholderImage: PropTypes.string,
   fallbackImage: PropTypes.string,
-  fallbackMessage: PropTypes.string,
+  fallbackMessage: PropTypes.element,
   placeholderColor: PropTypes.string,
   retry: PropTypes.shape({
     count: PropTypes.number,
