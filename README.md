@@ -1,4 +1,4 @@
-# React Graceful Image
+# React Graceful Image (Sailthru specified version)
 
 An image component for gracefully dealing with image errors, by providing optional lazy loading, optional placeholder and configurable retries on failure. Particularly useful in situations where your application might be used in poor signal areas such as when travelling on a train, a bus or a car.
 
@@ -74,6 +74,9 @@ class YourComponent extends Component {
 | **`retry`**            | Retry algorithm's configuration, consisting of `count`, `delay` and `accumulate` | _`{count: 8, delay: 2, accumulate: 'multiply'}`_ | _object_ |
 | **`noRetry`**          | Turn off re-trying                                                               | _false_                                          | _bool_   |
 | **`noLazyLoad`**       | Turn off lazy loading                                                            | _false_                                          | _bool_   |
+| **`placeholderImage`** | In progress image                                                                | _None_                                          | _string_   |
+| **`fallbackImage`**    | Fall back image if loading fails after retries                                   | _None_                                          | _string_   |
+| **`fallbackMessage`**  | Fall back message shown below fallbackImage if loading fails after retries       | _None_                                          | _node_   |
 
 ### Retry
 
