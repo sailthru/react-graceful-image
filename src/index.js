@@ -47,11 +47,15 @@ class GracefulImage extends Component {
         this.props.style && this.props.style.height
           ? this.props.style.height
           : this.props.height ? this.props.height : "150";
-      placeholder =
+      if (this.props.placeholderImage !== null) {
+        placeholder = this.props.placeholderImage;
+      } else {
+        placeholder =
         "data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'{{w}}' height%3D'{{h}}' viewBox%3D'0 0 {{w}} {{h}}'%2F%3E";
-      placeholder = placeholder
-        .replace(/{{w}}/g, width)
-        .replace(/{{h}}/g, height);
+        placeholder = placeholder
+          .replace(/{{w}}/g, width)
+          .replace(/{{h}}/g, height);
+      }
     }
 
     // store a reference to the throttled function
@@ -175,21 +179,56 @@ class GracefulImage extends Component {
             };
           });
         }, this.state.retryDelay * 1000);
+      } else {
+        this.setState({ fallbackImage: this.props.fallbackImage });
       }
     });
   }
 
   /*
     - If image hasn't yet loaded AND user didn't want a placeholder OR SVG not supported then don't render anything
-    - Else if image has loaded then render the image
-    - Else render the placeholder
+    - Else if image has not loaded and fallback image is given, then render the fallback image
+    - Else render the default placeholder until image is loaded.
   */
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
       return null;
+    else if (!this.state.loaded && this.state.fallbackImage) {
+      const style = {
+          animationName: "gracefulimage",
+          animationDuration: "0.3s",
+          animationIterationCount: 1,
+          animationTimingFunction: "ease-in",
+          transform: 'translateY(50%)',
+        };
+      const wrapperStyle = {
+        width: this.props.width,
+        height: this.props.height,
+        backgroundColor:'#f2f3f4',
+        textAlign:'center'
+      };
+
+      return (
+        <div style={{ ...wrapperStyle }}>
+          <img
+            src={this.state.fallbackImage}
+            className={this.props.className}
+            width='65px'
+            height='65px'
+            style={{
+              ...style,
+              ...this.props.style
+            }}
+            alt={this.props.alt}
+            ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
+          />
+          {this.props.fallbackMessage}
+        </div>
+        );
+    }
 
     const src = this.state.loaded ? this.props.src : this.state.placeholder;
-    const style = this.state.loaded
+    const style = this.state.loaded && !this.props.placeholderImage
       ? {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
@@ -222,6 +261,9 @@ GracefulImage.defaultProps = {
   height: null,
   alt: "Broken image placeholder",
   style: {},
+  placeholderImage: null,
+  fallbackImage: null,
+  fallbackMessage: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -240,6 +282,12 @@ GracefulImage.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   alt: PropTypes.string,
   style: PropTypes.object,
+  placeholderImage: PropTypes.string,
+  fallbackImage: PropTypes.string,
+  fallbackMessage: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   placeholderColor: PropTypes.string,
   retry: PropTypes.shape({
     count: PropTypes.number,
