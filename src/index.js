@@ -239,6 +239,7 @@ class GracefulImage extends Component {
 
     const newWidth = this.state.loaded ? this.props.width : this.props.placeholderWidth;
     const newHeight = this.state.loaded ? this.props.height : this.props.placeholderHeight;
+    const newStyle = this.state.loaded && this.props.placeholderImage ? this.props.placeholderStyle : this.props.style;
 
     return (
       <img
@@ -248,7 +249,7 @@ class GracefulImage extends Component {
         height={newHeight}
         style={{
           ...style,
-          ...this.props.style
+          ...newStyle
         }}
         alt={this.props.alt}
         ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
@@ -269,6 +270,7 @@ GracefulImage.defaultProps = {
   fallbackMessage: null,
   placeholderWidth: null,
   placeholderHeigh: null,
+  placeholderStyle: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -289,6 +291,7 @@ GracefulImage.propTypes = {
   style: PropTypes.object,
   placeholderWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   placeholderHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  placeholderStyle: PropTypes.object,
   placeholderImage: PropTypes.string,
   fallbackImage: PropTypes.string,
   fallbackMessage: PropTypes.oneOfType([
