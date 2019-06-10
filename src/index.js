@@ -199,11 +199,11 @@ class GracefulImage extends Component {
           animationDuration: "0.3s",
           animationIterationCount: 1,
           animationTimingFunction: "ease-in",
-          transform: 'translateY(50%)',
+          transform: 'translateY(75%)',
         };
       const wrapperStyle = {
-        width: this.props.width,
-        height: this.props.height,
+        width: this.props.placeholderWidth,
+        height: this.props.placeholderHeight,
         backgroundColor:'#f2f3f4',
         textAlign:'center'
       };
@@ -237,15 +237,19 @@ class GracefulImage extends Component {
         }
       : { background: this.props.placeholderColor };
 
+    const newWidth = this.state.loaded ? this.props.width : this.props.placeholderWidth;
+    const newHeight = this.state.loaded ? this.props.height : this.props.placeholderHeight;
+    const newStyle = !this.state.loaded && this.props.placeholderImage ? this.props.placeholderStyle : this.props.style;
+
     return (
       <img
         src={src}
         className={this.props.className}
-        width={this.props.width}
-        height={this.props.height}
+        width={newWidth}
+        height={newHeight}
         style={{
           ...style,
-          ...this.props.style
+          ...newStyle
         }}
         alt={this.props.alt}
         ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
@@ -264,6 +268,9 @@ GracefulImage.defaultProps = {
   placeholderImage: null,
   fallbackImage: null,
   fallbackMessage: null,
+  placeholderWidth: null,
+  placeholderHeigh: null,
+  placeholderStyle: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -282,6 +289,9 @@ GracefulImage.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   alt: PropTypes.string,
   style: PropTypes.object,
+  placeholderWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  placeholderHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  placeholderStyle: PropTypes.object,
   placeholderImage: PropTypes.string,
   fallbackImage: PropTypes.string,
   fallbackMessage: PropTypes.oneOfType([
