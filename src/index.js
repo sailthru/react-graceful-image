@@ -237,12 +237,15 @@ class GracefulImage extends Component {
         }
       : { background: this.props.placeholderColor };
 
+    const newWidth = this.state.loaded ? this.props.width : this.props.placeholderWidth;
+    const newHeight = this.state.loaded ? this.props.height : this.props.placeholderHeight;
+
     return (
       <img
         src={src}
         className={this.props.className}
-        width={this.props.width}
-        height={this.props.height}
+        width={newWidth}
+        height={newHeight}
         style={{
           ...style,
           ...this.props.style
