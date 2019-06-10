@@ -202,8 +202,8 @@ class GracefulImage extends Component {
           transform: 'translateY(75%)',
         };
       const wrapperStyle = {
-        width: this.props.width,
-        height: this.props.height,
+        width: this.props.placeholderWidth,
+        height: this.props.placeholderHeight,
         backgroundColor:'#f2f3f4',
         textAlign:'center'
       };
@@ -264,6 +264,8 @@ GracefulImage.defaultProps = {
   placeholderImage: null,
   fallbackImage: null,
   fallbackMessage: null,
+  placeholderWidth: null,
+  placeholderHeigh: null,
   placeholderColor: "#eee",
   retry: {
     count: 8,
@@ -282,6 +284,8 @@ GracefulImage.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   alt: PropTypes.string,
   style: PropTypes.object,
+  placeholderWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  placeholderHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   placeholderImage: PropTypes.string,
   fallbackImage: PropTypes.string,
   fallbackMessage: PropTypes.oneOfType([
