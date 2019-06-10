@@ -216,8 +216,7 @@ class GracefulImage extends Component {
             width='65px'
             height='65px'
             style={{
-              ...style,
-              ...this.props.style
+              ...style
             }}
             alt={this.props.alt}
             ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
