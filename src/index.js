@@ -86,6 +86,7 @@ class GracefulImage extends Component {
     const image = new Image();
     image.onload = () => {
       this.setState({ loaded: true });
+      this.onLoadCallBack();
     };
     image.onerror = () => {
       this.handleImageRetries(image);
@@ -175,6 +176,9 @@ class GracefulImage extends Component {
             };
           });
         }, this.state.retryDelay * 1000);
+      } else {
+        this.setState({ fallbackImage: this.props.fallbackImage });
+        this.onFallbackCallBack();
       }
     });
   }
@@ -230,11 +234,15 @@ GracefulImage.defaultProps = {
   },
   noRetry: false,
   noPlaceholder: false,
-  noLazyLoad: false
+  noLazyLoad: false,
+  onLoadCallBack: null,
+  onFallbackCallBack: null,
 };
 
 GracefulImage.propTypes = {
   src: PropTypes.string.isRequired,
+  onLoadCallBack: PropTypes.func,
+  onFallbackCallBack: PropTypes.func,
   className: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
