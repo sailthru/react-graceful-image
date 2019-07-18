@@ -88,6 +88,7 @@ class GracefulImage extends Component {
   */
   loadImage() {
     const image = new Image();
+    if (this.useFallBackImageDirectly)
     image.onload = () => {
       this.setState({ loaded: true });
     };
@@ -181,6 +182,9 @@ class GracefulImage extends Component {
         }, this.state.retryDelay * 1000);
       } else {
         this.setState({ fallbackImage: this.props.fallbackImage });
+        if (this.state.load === false && this.props.onFallbackCallBack !== null) {
+          this.props.onFallbackCallBack();
+        }
       }
     });
   }
@@ -193,7 +197,7 @@ class GracefulImage extends Component {
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
       return null;
-    else if (!this.state.loaded && this.state.fallbackImage) {
+    else if ((!this.state.loaded && this.state.fallbackImage) || this.state.useFallBackImageDirectly) {
       const style = {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
@@ -265,6 +269,7 @@ GracefulImage.defaultProps = {
   alt: "Broken image placeholder",
   style: {},
   placeholderImage: null,
+  useFallBackImageDirectly: false,
   fallbackImage: null,
   fallbackMessage: null,
   placeholderWidth: null,
@@ -305,7 +310,8 @@ GracefulImage.propTypes = {
   }),
   noRetry: PropTypes.bool,
   noPlaceholder: PropTypes.bool,
-  noLazyLoad: PropTypes.bool
+  noLazyLoad: PropTypes.bool,
+  useFallBackImageDirectly: PropTypes.bool,
 };
 
 export default GracefulImage;
