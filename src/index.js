@@ -88,7 +88,7 @@ class GracefulImage extends Component {
   */
   loadImage() {
     const image = new Image();
-    if (this.useFallBackImageDirectly)
+
     image.onload = () => {
       this.setState({ loaded: true });
     };
