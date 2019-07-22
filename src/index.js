@@ -202,12 +202,12 @@ class GracefulImage extends Component {
     - Else render the default placeholder until image is loaded.
   */
   render() {
-    if (this.state.useFallBackImageDirectly) {
+    if (this.props.useFallBackImageDirectly) {
       this.setState({ loaded: false });
     }
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED)) {
       return null;
-    } else if ((!this.state.loaded && this.state.fallbackImage) || this.state.useFallBackImageDirectly) {
+    } else if ((!this.state.loaded && this.state.fallbackImage) || this.props.useFallBackImageDirectly) {
       const style = {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
