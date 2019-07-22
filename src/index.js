@@ -90,9 +90,16 @@ class GracefulImage extends Component {
     const image = new Image();
 
     image.onload = () => {
-      this.setState({ loaded: true });
+      if (this.state.useFallBackImageDirectly) {
+        this.setState({ loaded: false });
+      } else {
+        this.setState({ loaded: true });
+      }
     };
     image.onerror = () => {
+      if (this.state.useFallBackImageDirectly) {
+        this.setState({ loaded: false });
+      }
       this.handleImageRetries(image);
     };
     image.src = this.props.src;
@@ -195,9 +202,9 @@ class GracefulImage extends Component {
     - Else render the default placeholder until image is loaded.
   */
   render() {
-    if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
+    if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED)) {
       return null;
-    else if ((!this.state.loaded && this.state.fallbackImage) || this.state.useFallBackImageDirectly) {
+    } else if ((!this.state.loaded && this.state.fallbackImage) || this.state.useFallBackImageDirectly) {
       const style = {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
