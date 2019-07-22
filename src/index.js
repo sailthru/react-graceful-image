@@ -197,7 +197,7 @@ class GracefulImage extends Component {
   render() {
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED)) {
       return null;
-    } else if ((!this.state.loaded && this.props.fallbackImage) || this.props.useFallBackImageDirectly) {
+    } else if ((!this.state.loaded && this.state.fallbackImage) || this.props.useFallBackImageDirectly) {
       const style = {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
