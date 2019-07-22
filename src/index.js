@@ -215,7 +215,7 @@ class GracefulImage extends Component {
         textAlign:'center',
         margin: 'auto'
       };
-
+      const fallbackStyle = this.props.fallbackStyle;
       return (
         <div style={{ ...wrapperStyle }}>
           <img
@@ -224,7 +224,8 @@ class GracefulImage extends Component {
             width='65px'
             height='65px'
             style={{
-              ...style
+              ...style,
+              ...fallbackStyle
             }}
             alt={this.props.alt}
             ref={this.state.loaded ? null : ref => (this.placeholderImage = ref)}
@@ -290,6 +291,7 @@ GracefulImage.defaultProps = {
   noLazyLoad: false,
   onLoadCallBack: null,
   onFallbackCallBack: null,
+  fallbackStyle: null,
 };
 
 GracefulImage.propTypes = {
@@ -310,6 +312,7 @@ GracefulImage.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  fallbackStyle: PropTypes.object,
   placeholderColor: PropTypes.string,
   retry: PropTypes.shape({
     count: PropTypes.number,
