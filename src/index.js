@@ -202,9 +202,6 @@ class GracefulImage extends Component {
     - Else render the default placeholder until image is loaded.
   */
   render() {
-    if (this.props.useFallBackImageDirectly) {
-      this.setState({ loaded: false });
-    }
     if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED)) {
       return null;
     } else if ((!this.state.loaded && this.state.fallbackImage) || this.props.useFallBackImageDirectly) {
