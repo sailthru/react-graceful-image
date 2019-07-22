@@ -90,16 +90,9 @@ class GracefulImage extends Component {
     const image = new Image();
 
     image.onload = () => {
-      if (this.state.useFallBackImageDirectly) {
-        this.setState({ loaded: false });
-      } else {
-        this.setState({ loaded: true });
-      }
+      this.setState({ loaded: true });
     };
     image.onerror = () => {
-      if (this.state.useFallBackImageDirectly) {
-        this.setState({ loaded: false });
-      }
       this.handleImageRetries(image);
     };
     image.src = this.props.src;
@@ -211,12 +204,13 @@ class GracefulImage extends Component {
           animationIterationCount: 1,
           animationTimingFunction: "ease-in",
           transform: 'translateY(75%)',
-        };
+      };
       const wrapperStyle = {
         width: this.props.placeholderWidth,
         height: this.props.placeholderHeight,
         backgroundColor:'#f2f3f4',
-        textAlign:'center'
+        textAlign:'center',
+        margin: 'auto'
       };
 
       return (
