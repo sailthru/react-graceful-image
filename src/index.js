@@ -88,6 +88,7 @@ class GracefulImage extends Component {
   */
   loadImage() {
     const image = new Image();
+
     image.onload = () => {
       this.setState({ loaded: true });
       if (this.props.onLoadCallBack !== null) {
@@ -197,27 +198,28 @@ class GracefulImage extends Component {
     - Else render the default placeholder until image is loaded.
   */
   render() {
-    if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED))
+    if (!this.state.loaded && (this.props.noPlaceholder || !IS_SVG_SUPPORTED)) {
       return null;
-    else if (!this.state.loaded && this.state.fallbackImage) {
+    } else if ((!this.state.loaded && this.state.fallbackImage) || this.props.useFallBackImageDirectly) {
       const style = {
           animationName: "gracefulimage",
           animationDuration: "0.3s",
           animationIterationCount: 1,
           animationTimingFunction: "ease-in",
           transform: 'translateY(75%)',
-        };
+      };
       const wrapperStyle = {
         width: this.props.placeholderWidth,
         height: this.props.placeholderHeight,
         backgroundColor:'#f2f3f4',
-        textAlign:'center'
+        textAlign:'center',
+        margin: 'auto'
       };
 
       return (
         <div style={{ ...wrapperStyle }}>
           <img
-            src={this.state.fallbackImage}
+            src={this.props.fallbackImage}
             className={this.props.className}
             width='65px'
             height='65px'
@@ -271,6 +273,7 @@ GracefulImage.defaultProps = {
   alt: "Broken image placeholder",
   style: {},
   placeholderImage: null,
+  useFallBackImageDirectly: false,
   fallbackImage: null,
   fallbackMessage: null,
   placeholderWidth: null,
@@ -315,7 +318,8 @@ GracefulImage.propTypes = {
   }),
   noRetry: PropTypes.bool,
   noPlaceholder: PropTypes.bool,
-  noLazyLoad: PropTypes.bool
+  noLazyLoad: PropTypes.bool,
+  useFallBackImageDirectly: PropTypes.bool,
 };
 
 export default GracefulImage;
